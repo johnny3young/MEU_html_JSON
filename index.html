@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
 
     <title>Our vessels</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
-    
+    <link
+      href="https://fonts.googleapis.com/css?family=Faster+One"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+
     <!-- <style>
       body {
         background-color: aqua;
@@ -20,79 +23,85 @@
 @import url(/style.css);
 
     </style> -->
-    
   </head>
 
   <body>
+    <header></header>
 
-      <header>
-
-      </header>
-
-      <section>
-
-      </section>
+    <section></section>
 
     <script>
-    const header = document.querySelector('header');
-    const section = document.querySelector('section');
+      const header = document.querySelector("header");
+      const section = document.querySelector("section");
+      const fleetResult = {
+        SHIP_ID: 0,
+        MMSI: 1,
+        IMO: 2,
+        SHIPNAME: 3,
+        ACTIVE: 4,
+      };
 
-    //let requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
-    let requestURL = 'https://services.marinetraffic.com/api/exportvessels/v:8/59c42a45a22659409e32bcbdbd6abd88143c89ce/timespam:10/msgtype:extended/protocol:json'
-    let request = new XMLHttpRequest();
-    request.open('GET', requestURL);
-    request.responseType = 'json';
-    request.send();
+      //let requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
+      //let requestURL = 'https://services.marinetraffic.com/api/exportvessels/v:8/59c42a45a22659409e32bcbdbd6abd88143c89ce/timespam:10/msgtype:extended/protocol:json'
+      let requestURL =
+        "https://services.marinetraffic.com/api/getfleet/963d07494be3a679ac74a71dd7b1f4f0572e776b?v=2&protocol=json";
+      let request = new XMLHttpRequest();
+      request.open("GET", requestURL);
+      request.responseType = "json";
+      request.send();
 
-    request.onload = function() {
-      const superHeroes = request.response;
-      populateHeader(superHeroes);
-      showHeroes(superHeroes);
-    }
+      request.onload = function () {
+        const superHeroes = request.response;
+        //populateHeader(superHeroes);
+        showHeroes(superHeroes);
+      };
 
-    function populateHeader(obj) {
-      const myH1 = document.createElement('h1');
-      myH1.textContent = obj['SHIPNAME'];
-      header.appendChild(myH1);
+      function populateHeader(obj) {
+        const myH1 = document.createElement("h1");
+        myH1.textContent = obj["SHIPNAME"];
+        header.appendChild(myH1);
 
-      const myPara = document.createElement('p');
-      myPara.textContent = 'Arrived at Port: ' + obj['CURRENT_PORT'] + ' // From Port: ' + obj['LAST_PORT'];
-      header.appendChild(myPara);
-    }
-
-    function showHeroes(obj) {
-      const heroes = obj['members'];
-
-      for(let i = 0; i < heroes.length; i++) {
-        const myArticle = document.createElement('article');
-        const myH2 = document.createElement('h2');
-        const myPara1 = document.createElement('p');
-        const myPara2 = document.createElement('p');
-        const myPara3 = document.createElement('p');
-        const myList = document.createElement('ul');
-
-        myH2.textContent = heroes[i].name;
-        myPara1.textContent = 'Type Name: ' + heroes[i].TYPE_NAME;
-        myPara2.textContent = 'FLAG: ' + heroes[i].FLAG;
-        myPara3.textContent = 'Superpowers:';
-
-        // const superPowers = heroes[i].powers;
-        // for(let j = 0; j < superPowers.length; j++) {
-        //   const listItem = document.createElement('li');
-        //   listItem.textContent = superPowers[j];
-        //   myList.appendChild(listItem);
-        // }
-
-        myArticle.appendChild(myH2);
-        myArticle.appendChild(myPara1);
-        myArticle.appendChild(myPara2);
-        myArticle.appendChild(myPara3);
-        myArticle.appendChild(myList);
-
-        section.appendChild(myArticle);
+        const myPara = document.createElement("p");
+        myPara.textContent =
+          "Arrived at Port: " +
+          obj["SHIPNAME"] +
+          " // From Port: " +
+          obj["SHIPNAME"];
+        header.appendChild(myPara);
       }
-    }
 
+      function showHeroes(obj) {
+        const heroes = obj;
+
+        for (let i = 0; i < heroes.length; i++) {
+          const myArticle = document.createElement("article");
+          const myH2 = document.createElement("h2");
+          const myPara1 = document.createElement("p");
+          const myPara2 = document.createElement("p");
+          const myPara3 = document.createElement("p");
+          const myList = document.createElement("ul");
+
+          myH2.textContent = heroes[i][fleetResult.SHIPNAME];
+          myPara1.textContent = "Type Name: " + heroes[i][fleetResult.SHIP_ID];
+          myPara2.textContent = "FLAG: " + heroes[i][fleetResult.MMSI];
+          myPara3.textContent = "Superpowers:" + heroes[i][fleetResult.IMO];
+
+          // const superPowers = heroes[i].powers;
+          // for(let j = 0; j < superPowers.length; j++) {
+          //   const listItem = document.createElement('li');
+          //   listItem.textContent = superPowers[j];
+          //   myList.appendChild(listItem);
+          // }
+
+          myArticle.appendChild(myH2);
+          myArticle.appendChild(myPara1);
+          myArticle.appendChild(myPara2);
+          myArticle.appendChild(myPara3);
+          myArticle.appendChild(myList);
+
+          section.appendChild(myArticle);
+        }
+      }
     </script>
   </body>
 </html>
